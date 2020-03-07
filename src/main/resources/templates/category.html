@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Категория</title>
+</head>
+<body>
+
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+    <div class="card">
+        <div class="card-header">
+            <b>Создано: </b><span th:text="${#temporals.format(data.category.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            <b>Обновлено: </b><span th:text="${#temporals.format(data.category.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${data.category.name}"></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" >
+                <b>Псевдоним: </b> <span th:text="${data.category.alias}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Статус: </b> <span th:text="${data.category.status}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Изображение: </b> <span th:text="${data.category.imageUrl}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

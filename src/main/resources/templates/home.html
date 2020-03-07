@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+    <h1 th:text="${data.greentings}">Hello</h1>
+</div>
+</body>
+</html>

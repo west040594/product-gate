@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html
+        lang="en"
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head th:fragment="common_header(title)">
+    <meta charset="UTF-8">
+    <title th:replace="${title}">Title</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/4.1.0/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.3.1-1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<section th:fragment="nav-section">
+    <nav class="navbar navbar-expand navbar-light bg-light justify-content-between">
+        <a class="navbar-brand" th:href="@{/}">Product UI</a>
+        <div class="navbar-collapse collapse" id="navbarNav">
+            <ul class="nav navbar-nav mr-auto">
+                <li class="nav-item"><a class="nav-link" th:href="@{/home}">Главная</a></li>
+                <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" th:href="@{/login}">Вход</a></li>
+                <li sec:authorize="isAnonymous()" class="nav-item"><a class="nav-link" th:href="@{/register}">Регистрация</a></li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="cityDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Product Info
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="productInfoDropdown">
+                        <a th:href="@{/products/create}" class="dropdown-item">Создать продукт</a>
+                        <a th:href="@{/products}" class="dropdown-item">Список продуктов</a>
+                        <a th:href="@{/categories/create}" class="dropdown-item">Создать категорию</a>
+                        <a th:href="@{/categories}" class="dropdown-item">Список категорий</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" id="airlineDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Product Determination
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="airlineDropdown">
+                        <a th:href="@{/airline/create}" class="dropdown-item">Создать</a>
+                        <a th:href="@{/airline}" class="dropdown-item">Список</a>
+                    </div>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item ml-auto"><a class="nav-link" th:href="@{/logout}">Выйти</a></li>
+            </ul>
+            <ul class="nav navbar-nav ml-auto">
+                <li sec:authorize="isAuthenticated()" class="nav-item"><span sec:authentication="name" class="navbar-text">username</span></li>
+            </ul>
+        </div>
+    </nav>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Создать продукт</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+    <form method="post" th:action="@{/products/create}" id="createProductForm" th:object="${productForm}">
+
+        <div class="form-group">
+            <label for="category" class="control-label">Категория продукта</label>
+            <select id="category"  class="form-control" th:field="*{category}">
+                <option th:each="category : ${data.categories}"
+                        th:value="${category}"
+                        th:text="${category}"></option>
+            </select>
+            <p th:each="error : ${#fields.errors('name')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="name" class="control-label">Название продукта</label>
+            <select id="name"  class="form-control" th:field="*{name}">
+                <option th:each="name : ${data.names}"
+                        th:value="${name}"
+                        th:text="${name}"></option>
+            </select>
+            <p th:each="error : ${#fields.errors('name')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="description" class="control-label">Описание продукта</label>
+            <input id="description" class="form-control" th:field="*{description}"/>
+            <p th:each="error: ${#fields.errors('description')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="averagePrice" class="control-label">Средняя цена</label>
+            <input id="averagePrice" class="form-control" th:field="*{averagePrice}"/>
+            <p th:each="error: ${#fields.errors('averagePrice')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="reviewSystemLinks" class="control-label">Ссылки на продукт</label>
+            <input id="reviewSystemLinks" class="form-control" th:field="*{reviewSystemLinks}"/>
+            <p th:each="error: ${#fields.errors('reviewSystemLinks')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Принять</button>
+    </form>
+
+</div>
+</body>
+</html>

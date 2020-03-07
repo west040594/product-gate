@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Продукт</title>
+</head>
+<body>
+
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+    <div class="card">
+        <div class="card-header">
+            <b>Создано: </b><span th:text="${#temporals.format(data.product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            <b>Обновлено: </b><span th:text="${#temporals.format(data.product.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title" th:text="${data.product.name}"></h5>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" >
+                <b>Описание: </b> <span th:text="${data.product.description}"></span>
+            </li>
+            <li class="list-group-item">
+                <b>Средняя цена: </b> <span th:text="${data.product.averagePrice}"></span>
+            </li>
+            <li class="list-group-item">
+                <b>Заполнено: </b> <span th:text="${data.product.fill}"></span>
+                <button class="btn btn-info btn-sm" role="sendParseRequest" th:attr="data-productId=${data.product.id}" th:if="${data.product.fill != true}">
+                    Отправить запрос заново
+                </button>
+            </li>
+            <li class="list-group-item" >
+                <b>Статус: </b> <span th:text="${data.product.status}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Изображение: </b> <span th:text="${data.product.imageUrl}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Рейтинг: </b> <span th:text="${data.product.rating}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Создал: </b> <span th:text="${data.product.createdBy}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Изменил: </b> <span th:text="${data.product.lastModifiedBy}"></span>
+            </li>
+            <li class="list-group-item" >
+                <b>Ссылки: </b> <span th:text="${data.product.reviewSystemLinks}"></span>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

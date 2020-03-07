@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Тренировать модели</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item" th:each="category : ${data.categories}">
+                <b>Категория: </b> <span th:text="${category.name}"></span>/<span th:text="${category.alias}"></span>
+                <button role="trainModel"  th:attr="data-alias=${category.alias}" class="btn btn-primary">Тренировать</button>
+            </li>
+        </ul>
+</div>
+</body>
+</html>

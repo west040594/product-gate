@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Создать категорию</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+    <form method="post" th:action="@{/categories/create}" id="createCategoryForm" th:object="${categoryForm}">
+
+        <div class="form-group">
+            <label for="name" class="control-label">Наименование категории</label>
+            <input id="name" class="form-control" th:field="*{name}"/>
+            <p th:each="error: ${#fields.errors('name')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="imageUrl" class="control-label">Ссылка на изображение</label>
+            <input id="imageUrl" class="form-control" th:field="*{imageUrl}"/>
+            <p th:each="error: ${#fields.errors('imageUrl')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <div class="form-group">
+            <label for="alias" class="control-label">Псевдоним</label>
+            <select id="alias"  class="form-control" th:field="*{alias}">
+                <option th:each="alias : ${data.aliases}"
+                        th:value="${alias}"
+                        th:text="${alias}"></option>
+            </select>
+            <p th:each="error : ${#fields.errors('alias')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Принять</button>
+    </form>
+
+</div>
+</body>
+</html>

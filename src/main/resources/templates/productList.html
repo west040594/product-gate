@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Продукты</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+
+    <div class="input-group">
+        <select id="category-select" class="custom-select">
+            <option selected>Выберите категорию</option>
+            <option th:each="category : ${data.categories}" th:value="${category.name}" th:text="${category.name}"></option>
+        </select>
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Фильтр</button>
+        </div>
+    </div>
+    <div th:each="product : ${data.products}">
+        <div class="card">
+            <div class="card-header">
+                <b>Дата создания: </b><span th:text="${#temporals.format(product.createTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                <b>Дата изменения: </b><span th:text="${#temporals.format(product.lastModifyTime, 'yyyy-MM-dd HH:mm:ss')}"></span>
+            </div>
+
+            <div class="row no-gutters">
+                <div class="col-md-4">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${product.name}">Название продукта</h5>
+                    </div>
+                    <img th:src="@{${product.imageUrl}}" class="bd-placeholder-img card-img-top img-fluid" alt="product-image">
+                </div>
+                <div class="col-md-8">
+                    <ul class="list-group list-group-flush">
+
+                        <li class="list-group-item" >
+                            <b>Категория: </b> <span th:text="${product.category}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Статус: </b> <span th:text="${product.status}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Средняя цена: </b> <span th:text="${product.averagePrice}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Рейтинг: </b> <span th:text="${product.rating}"></span>
+                        </li>
+                        <li class="list-group-item">
+                            <b>Создал: </b> <span th:text="${product.createdBy}"></span>
+                        </li>
+                    </ul>
+                    <div class="card-body">
+                        <a th:href="@{'/products/' + ${product.id}}" class="btn btn-primary card-link">Перейти</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

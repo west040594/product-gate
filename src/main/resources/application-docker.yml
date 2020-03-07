@@ -1,0 +1,8 @@
+feign:
+  services:
+    authentication:
+      url: authentication-system:8085/api/v1/users
+    productinfo:
+      url: product-info:8083/api/v1
+    productdetermination:
+      url: product-determination:8081/api/v1/determination

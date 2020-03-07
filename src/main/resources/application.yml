@@ -1,0 +1,41 @@
+server:
+  port: 8082
+
+
+security:
+  jwt:
+    token: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ3ZXN0MjIzIiwiYXV0aCI6W3siYXV0aG9yaXR5IjoiUk9MRV9VU0VSIn1dLCJpYXQiOjE1NzExMjc3MDIsImV4cCI6MTU3MTIxNDEwMn0.g0xoH_LWTt-uZCm1Sd_nGVNCpiHJHxRwmbhrhWv9k0A
+
+
+feign:
+  services:
+    authentication:
+      name: authentication-service
+      url: localhost:8085/api/v1/users
+    productinfo:
+      name: product-info-service
+      url: localhost:8083/api/v1
+    productdetermination:
+      name: product-determination-service
+      url: localhost:8081/api/v1/determination
+
+api:
+  swagger:
+    category:
+      create: Добавить новую категорию
+      id:  Найти категорию по id
+      name: Найти категорию по имени
+      all: Найти все категории
+      delete: Удалить категорию
+    determination:
+      labels: Получить все возможные наименования продуктов нейронной модели
+      predict: Сделать предсказание по фотографии
+      train: Запустить процесс обучения нейронной модели
+    product:
+      create: Добавить новый продукт
+      all: Найти все продукты
+      delete: Удалить продукт
+      id: Найти продукт по id
+      parse: Запустить процесс парсинга отзывов по id продукта
+      category:
+        name: Найти продукты по наименованию категории
