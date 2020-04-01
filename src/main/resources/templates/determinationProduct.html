@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th = "http://www.thymeleaf.org">
+<head th:replace="layout :: common_header(~{::title})">
+    <meta charset="UTF-8">
+    <title>Определить продукт по изображению</title>
+</head>
+<body>
+<section th:replace="layout :: nav-section"></section>
+<div class="my-md-4 container">
+
+    <form th:object="${determinationForm}" method="POST" th:action="@{/determination/predict}" enctype="multipart/form-data" accept-charset="UTF-8">
+        <div class="form-group">
+            <label for="modelName" class="control-label">Модель</label>
+            <select id="modelName"  class="form-control" th:field="*{modelName}">
+                <option th:each="category : ${data.categories}"
+                        th:value="${category.alias}"
+                        th:text="${category.name}"></option>
+            </select>
+            <p th:each="error : ${#fields.errors('modelName')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+        <div class="form-group">
+            <label for="file" class="control-label">Изображение продукта</label>
+            <input id="file" th:field="*{file}" type="file"/>
+            <p th:each="error : ${#fields.errors('file')}"
+               th:text="${error}">Ошибка валидации</p>
+        </div>
+        <button type="submit" class="btn btn-primary">Принять</button>
+    </form>
+</div>
+</body>
+</html>

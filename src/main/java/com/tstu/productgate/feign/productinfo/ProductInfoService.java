@@ -35,6 +35,20 @@ public class ProductInfoService {
         return productResponses;
     }
 
+
+    /**
+     * Получение продукта в product-info-service по его наименованию
+     * @param productName Наименование продукта
+     * @return Найденный продукт
+     */
+    public ProductResponse getProductByPredict(String productName) {
+        log.info("Запрос на получение продукта по наименованию в product-info - {}", productName);
+        requestContext.setRequestService(feignProperties.getServices().getProductinfo().getName());
+        ProductResponse productResponse = productInfoClient.getProductByPredict(productName).getBody();
+        log.info("Продукт - {}", productResponse.getName());
+        return productResponse;
+    }
+
     /**
      * Создание нового продукта в product-info-service
      * @param productDataRequest Структура запроса на добавление нового продукта
@@ -72,7 +86,7 @@ public class ProductInfoService {
     }
 
     /**
-     * Получение продуктов по id в product-info-service
+     * Получение продуктов по названию категории в product-info-service
      * @param categoryName категория продукта
      * @return Найденный продукт
      */
@@ -80,6 +94,17 @@ public class ProductInfoService {
         log.info("Поиск всех продуктов по категории - {} в product-info", categoryName);
         requestContext.setRequestService(feignProperties.getServices().getProductinfo().getName());
         return productInfoClient.getProductsByCategoryName(categoryName).getBody();
+    }
+
+    /**
+     * Получение продуктов по псевдониму категории в product-info-service
+     * @param categoryAlias Псевдоним категории продукта
+     * @return Найденный продукт
+     */
+    public List<ProductResponse> getProductsByCategoryAlias(String categoryAlias) {
+        log.info("Поиск всех продуктов по псевдониму категории - {} в product-info", categoryAlias);
+        requestContext.setRequestService(feignProperties.getServices().getProductinfo().getName());
+        return productInfoClient.getProductsByCategoryAlias(categoryAlias).getBody();
     }
 
     /**

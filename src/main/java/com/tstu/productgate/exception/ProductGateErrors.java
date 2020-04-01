@@ -18,7 +18,8 @@ public enum ProductGateErrors implements PrsErrorCode {
     PRODUCT_INFO_REQUEST_ERROR(8, ProductGateExceptionMessage.PRODUCT_INFO_REQUEST_ERROR_MSG),
     PRODUCT_DETERMINATION_REQUEST_ERROR(9, ProductGateExceptionMessage.PRODUCT_DETERMINATION_REQUEST_ERROR_MSG),
     UNEXPECTED_ERROR(10, ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
-    CONNECTION_ERROR(11, ProductGateExceptionMessage.CONNECTION_ERROR_MSG);
+    CONNECTION_ERROR(11, ProductGateExceptionMessage.CONNECTION_ERROR_MSG),
+    COULD_NOT_DETERMINE_PRODUCT_ERROR(12, ProductGateExceptionMessage.COULD_NOT_DETERMINE_PRODUCT_ERROR_MSG);
 
     private Integer errorCode;
     private String errorDescription;

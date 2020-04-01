@@ -15,7 +15,7 @@ import java.util.Set;
 @FeignClient(name = "product-determination", url = "${feign.services.productdetermination.url}")
 public interface ProductDeterminationClient {
 
-    @PostMapping(value = "/predict/{modelName}", consumes = "multipart/form-data" )
+    @PostMapping(value = "/predict/{modelName}", consumes = "multipart/form-data" , produces = "application/json")
     ResponseEntity<PredictionResponse> predictImage(@RequestPart("file") MultipartFile file, @PathVariable("modelName") String modelName);
 
     @GetMapping(value = "/predict/labels/{modelName}")

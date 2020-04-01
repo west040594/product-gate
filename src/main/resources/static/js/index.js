@@ -3,6 +3,10 @@ $(document).ready(function() {
     var $sendParseRequestButtons = $('[role=sendParseRequest]')
     var $trainModelButtons = $('[role=trainModel]')
 
+    var $selectProductCategories = $('#createProductForm #category')
+    var $selectProductNames = $('#createProductForm #name')
+
+
     function refreshProductInfo(data) {
         console.log(data);
         $sendParseRequestButtons.prop("disabled", true);
@@ -18,7 +22,31 @@ $(document).ready(function() {
             console.log(data);
             $trainModelButtons.html("Процесс уже запущен");
             $trainModelButtons.prop("value", "Процесс уже запущен");
-        }
+    }
+
+    function refreshProductNameLabels(data) {
+        $selectProductNames.empty();
+        $.each(data, function(index, value) {
+          $selectProductNames.append($("<option></option>")
+             .attr("value", value).text(value));
+        });
+    }
+
+
+    $selectProductCategories.each(function() {
+            $(this).on('change', function () {
+                var alias = $(this).val()
+                console.log(alias)
+                $.ajax({
+                    type: "GET",
+                    url: "/api/v1/gate/product-determination/predict/labels/" + alias,
+                }).done(function(data) {
+                    refreshProductNameLabels.call(this, data);
+                }).fail(function(data) {
+                    console.log(data)
+                })
+            });
+        });
 
     $trainModelButtons.each(function() {
         var alias = $(this).attr('data-alias')

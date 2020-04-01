@@ -14,10 +14,10 @@
             <label for="category" class="control-label">Категория продукта</label>
             <select id="category"  class="form-control" th:field="*{category}">
                 <option th:each="category : ${data.categories}"
-                        th:value="${category}"
-                        th:text="${category}"></option>
+                        th:value="${category.alias}"
+                        th:text="${category.name}"></option>
             </select>
-            <p th:each="error : ${#fields.errors('name')}"
+            <p th:each="error : ${#fields.errors('category')}"
                th:text="${error}">Ошибка валидации</p>
         </div>
 

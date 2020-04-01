@@ -42,10 +42,10 @@ public class ProductController {
 
 
     @GetMapping
-    public String productListPage(@RequestParam(name = "category") Optional<String> categoryName, Model model) {
+    public String productListPage(@RequestParam(name = "category") Optional<String> categoryAlias, Model model) {
         HashMap<Object, Object> data = new HashMap<>();
         model.addAttribute("data", data);
-        List<ProductResponse> products = categoryName.isPresent() ? productInfoService.getProductsByCategoryName(categoryName.get())
+        List<ProductResponse> products = categoryAlias.isPresent() ? productInfoService.getProductsByCategoryAlias(categoryAlias.get())
                 : productInfoService.getAllProducts();
         data.put("products", products);
         List<CategoryResponse> categories = productInfoService.getAllCategories();
@@ -71,10 +71,10 @@ public class ProductController {
     }
 
     @GetMapping("/create")
-    public String createForm(Model model) {
+    public String createForm(@RequestParam(name = "category") Optional<String> categoryAlias, Model model) {
         //todo сделать категорию вместо константного значения
-        List<String> classLabels = productDeterminationService.getClassLabels(ENERGY_DRINKS);
-        List<String> categories = productInfoService.getAllCategories().stream().map(CategoryResponse::getName).collect(Collectors.toList());
+        List<String> classLabels = productDeterminationService.getClassLabels(categoryAlias.orElse(ENERGY_DRINKS));
+        List<CategoryResponse> categories = productInfoService.getAllCategories();
         HashMap<Object, Object> data = new HashMap<>();
         data.put("names", classLabels);
         data.put("categories", categories);

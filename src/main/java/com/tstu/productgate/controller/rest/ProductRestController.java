@@ -60,6 +60,22 @@ public class ProductRestController {
         return ResponseEntity.ok(allProducts);
     }
 
+
+    /**
+     * Получение списка всех продуктов по псевдониму категории
+     * @return Список продуктов
+     */
+    @GetMapping("/category/alias/{categoryAlias}")
+    @ApiOperation(value = "${api.swagger.product.category.alias}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
+    })
+    public ResponseEntity<?> getProductsByCategoryAlias(@PathVariable("categoryAlias") String categoryAlias) {
+        List<ProductResponse> allProducts = productInfoService.getProductsByCategoryAlias(categoryAlias);
+        return ResponseEntity.ok(allProducts);
+    }
+
     /**
      * Получение конкретного продукта по его id
      * @param id Id продукта

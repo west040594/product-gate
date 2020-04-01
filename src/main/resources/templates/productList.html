@@ -9,15 +9,23 @@
 <section th:replace="layout :: nav-section"></section>
 <div class="my-md-4 container">
 
-    <div class="input-group">
-        <select id="category-select" class="custom-select">
-            <option selected>Выберите категорию</option>
-            <option th:each="category : ${data.categories}" th:value="${category.name}" th:text="${category.name}"></option>
-        </select>
-        <div class="input-group-append">
-            <button class="btn btn-outline-secondary" type="button">Фильтр</button>
+    <form method="get" th:action="@{/products}" id="filterProductsByCategory">
+        <div class="input-group">
+            <select id="category-select" class="custom-select" name="category">
+                <option value="" disabled selected>Выберите категорию</option>
+                <option th:each="category : ${data.categories}"
+                        th:value="${category.alias}"
+                        th:text="${category.name}"
+                        th:selected="${#request.getParameter('category')} == ${category.alias}" >
+
+                </option>
+            </select>
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit">Фильтр</button>
+            </div>
         </div>
-    </div>
+    </form>
+
     <div th:each="product : ${data.products}">
         <div class="card">
             <div class="card-header">

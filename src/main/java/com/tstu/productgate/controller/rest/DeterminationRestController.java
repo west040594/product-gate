@@ -30,16 +30,31 @@ public class DeterminationRestController {
      * @param file Файл(Изображение) продукта
      * @return Коллекция продуктов наиболее подходящие под данное изображение
      */
-    @PostMapping("/predict/{modelName}")
-    @ApiOperation(value = "${api.swagger.determination.predict}")
+    @PostMapping("/predict/collection/{modelName}")
+    @ApiOperation(value = "${api.swagger.determination.predict.collection}")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
-    public ResponseEntity<?> predictImage(@RequestParam("file") MultipartFile file, @PathVariable("modelName") String modelName) {
-        log.info("Predict");
+    public ResponseEntity<List<ProductResponse> > getPredictListByImage(@RequestParam("file") MultipartFile file, @PathVariable("modelName") String modelName) {
         List<ProductResponse> productsByImage = gateService.getProductsByImage(file, modelName);
         return ResponseEntity.ok(productsByImage);
+    }
+
+
+    /** Предсказание продукта по изображению
+     * @param file Файл(Изображение) продукта
+     * @return Продукт наиболее подходящие под данное изображение
+     */
+    @PostMapping("/predict/single/{modelName}")
+    @ApiOperation(value = "${api.swagger.determination.predict.single}")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
+    })
+    public ResponseEntity<ProductResponse> getPredictProductByImage(@RequestParam("file") MultipartFile file, @PathVariable("modelName") String modelName) {
+        ProductResponse productByImage = gateService.getSingleProductsByImage(file, modelName);
+        return ResponseEntity.ok(productByImage);
     }
 
     /**

@@ -16,6 +16,9 @@ public interface ProductInfoClient {
     @PostMapping("/products/predict")
     ResponseEntity<List<ProductResponse>> getAllProductsByPredict(@RequestBody List<String> productNames);
 
+    @GetMapping("/products/name/{productName}")
+    ResponseEntity<ProductResponse> getProductByPredict(@PathVariable("productName") String productName);
+
     @GetMapping("/products")
     ResponseEntity<List<ProductResponse>> getAllProducts();
 
@@ -24,6 +27,9 @@ public interface ProductInfoClient {
 
     @GetMapping("/products/category/{categoryName}")
     ResponseEntity<List<ProductResponse> > getProductsByCategoryName(@PathVariable("categoryName") String categoryName);
+
+    @GetMapping("/products/category/alias/{categoryAlias}")
+    ResponseEntity<List<ProductResponse> > getProductsByCategoryAlias(@PathVariable("categoryAlias") String categoryAlias);
 
     @PostMapping("/products/create")
     ResponseEntity<ProductResponse> createNewProduct(@RequestBody ProductDataRequest productDataRequest);

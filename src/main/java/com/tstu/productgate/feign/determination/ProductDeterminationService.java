@@ -27,7 +27,7 @@ public class ProductDeterminationService {
      * @return Стуктура ответа предсказания. Содержит список наименований продуктов с коэфициентом совпадения наиболее подходящие под данное изображение
      */
     public PredictionResponse predictImage(MultipartFile file, String modelName) {
-        log.info("Запрос на предсказания наименования продукта {} в product-determination", modelName);
+        log.info("Запрос на предсказания наименования продукта {} в product-determination. Файл - {} / {}", modelName, file.getOriginalFilename(), file.getContentType());
         requestContext.setRequestService(feignProperties.getServices().getProductdetermination().getName());
         PredictionResponse predictionResponse = productDeterminationClient.predictImage(file, modelName).getBody();
         log.info("Наименования - {}", predictionResponse.getProducts());
