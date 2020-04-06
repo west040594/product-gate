@@ -16,6 +16,9 @@
         </div>
         <div class="card-body">
             <h5 class="card-title" th:text="${data.product.name}"></h5>
+            <div class="col-sm-2">
+                <img th:src="@{${data.product.imageUrl}}" class="bd-placeholder-img card-img-top img-fluid" alt="product-image">
+            </div>
         </div>
         <ul class="list-group list-group-flush">
             <li class="list-group-item" >
@@ -34,7 +37,7 @@
                 <b>Статус: </b> <span th:text="${data.product.status}"></span>
             </li>
             <li class="list-group-item" >
-                <b>Изображение: </b> <span th:text="${data.product.imageUrl}"></span>
+                <b>Количество отзывов: </b> <span th:text="${data.product.reviewsSize}"></span>
             </li>
             <li class="list-group-item" >
                 <b>Рейтинг: </b> <span th:text="${data.product.rating}"></span>

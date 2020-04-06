@@ -38,7 +38,9 @@
                     <div class="card-body">
                         <h5 class="card-title" th:text="${product.name}">Название продукта</h5>
                     </div>
-                    <img th:src="@{${product.imageUrl}}" class="bd-placeholder-img card-img-top img-fluid" alt="product-image">
+                    <div class="col-sm-7">
+                        <img th:src="@{${product.imageUrl}}" class="bd-placeholder-img card-img-top img-fluid" alt="product-image">
+                    </div>
                 </div>
                 <div class="col-md-8">
                     <ul class="list-group list-group-flush">
