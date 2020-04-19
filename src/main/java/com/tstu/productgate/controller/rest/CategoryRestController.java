@@ -36,7 +36,7 @@ public class CategoryRestController {
      * @return Созданная категория
      */
     @PostMapping("/create")
-    @ApiOperation(value = "${api.swagger.category.create}")
+    @ApiOperation(value = "${api.swagger.category.create}", response = CategoryResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
             @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
@@ -58,9 +58,10 @@ public class CategoryRestController {
      * @return Структура ответа с найденной категорией
      */
     @GetMapping("/{id}")
-    @ApiOperation(value = "${api.swagger.category.id}")
+    @ApiOperation(value = "${api.swagger.category.id}", response = CategoryResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
@@ -74,7 +75,7 @@ public class CategoryRestController {
      * @return Структура ответа с найденной категорией
      */
     @GetMapping("name/{name}")
-    @ApiOperation(value = "${api.swagger.category.name}")
+    @ApiOperation(value = "${api.swagger.category.name}", response = CategoryResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
             @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
@@ -90,7 +91,12 @@ public class CategoryRestController {
      * @return Структура ответа со списком категорий
      */
     @GetMapping
-    @ApiOperation(value = "${api.swagger.category.all}")
+    @ApiOperation(value = "${api.swagger.category.all}", response = CategoryResponse.class, responseContainer = "List")
+    @ApiResponses(value = {
+            @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
+            @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
+    })
     public ResponseEntity<?> getAllCategories() {
         List<CategoryResponse> categories = productInfoService.getAllCategories();
         return ResponseEntity.ok(categories);
@@ -103,14 +109,14 @@ public class CategoryRestController {
      * @return Структура ответа с информацией, что запрос на удаление был произведен
      */
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "${api.swagger.category.delete}")
+    @ApiOperation(value = "${api.swagger.category.delete}", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
             @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<?> deleteCategoryById(@PathVariable("id") Long id) {
-        productInfoService.deleteCategoryById(id);
-        return ResponseEntity.ok("Запись удалена");
+        String response = productInfoService.deleteCategoryById(id);
+        return ResponseEntity.ok(response);
     }
 }

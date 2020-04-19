@@ -9,7 +9,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,9 +30,10 @@ public class DeterminationRestController {
      * @return Коллекция продуктов наиболее подходящие под данное изображение
      */
     @PostMapping("/predict/collection/{modelName}")
-    @ApiOperation(value = "${api.swagger.determination.predict.collection}")
+    @ApiOperation(value = "${api.swagger.determination.predict.collection}", response = ProductResponse.class, responseContainer = "List")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<List<ProductResponse> > getPredictListByImage(@RequestParam("file") MultipartFile file, @PathVariable("modelName") String modelName) {
@@ -47,9 +47,10 @@ public class DeterminationRestController {
      * @return Продукт наиболее подходящие под данное изображение
      */
     @PostMapping("/predict/single/{modelName}")
-    @ApiOperation(value = "${api.swagger.determination.predict.single}")
+    @ApiOperation(value = "${api.swagger.determination.predict.single}", response = ProductResponse.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<ProductResponse> getPredictProductByImage(@RequestParam("file") MultipartFile file, @PathVariable("modelName") String modelName) {
@@ -58,13 +59,14 @@ public class DeterminationRestController {
     }
 
     /**
-     * Получение списка всех возможножных продуктов
-     * @return Список продуктов
+     * Получение списка всех возможножных продуктов по конкретной нейронной модели
+     * @return Список всех наименований продуктов, которые присуствуют в нейронной сети
      */
     @GetMapping("/predict/labels/{modelName}")
-    @ApiOperation(value = "${api.swagger.determination.labels}")
+    @ApiOperation(value = "${api.swagger.determination.labels}", response = String.class, responseContainer = "List")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<?> getAllPredictLabels(@PathVariable("modelName") String modelName) {
@@ -72,10 +74,16 @@ public class DeterminationRestController {
         return ResponseEntity.ok(labels);
     }
 
+    /**
+     * Запустить процесс тренировки модели
+     * @param modelName  Наименование модели
+     * @return Строка информации о статусе запуска
+     */
     @PostMapping(value = "/train/{modelName}")
-    @ApiOperation(value = "${api.swagger.determination.train}")
+    @ApiOperation(value = "${api.swagger.determination.train}", response = String.class)
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = ProductGateExceptionMessage.UNEXPECTED_ERROR_MSG),
+            @ApiResponse(code = 403, message = ProductGateExceptionMessage.ACCESS_DENIED_MSG),
             @ApiResponse(code = 422, message = ProductGateExceptionMessage.UNABLE_TO_PROCESS_DATA),
     })
     public ResponseEntity<String> trainModel(@PathVariable("modelName") String modelName) {
